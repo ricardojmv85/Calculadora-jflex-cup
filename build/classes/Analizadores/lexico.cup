@@ -1,0 +1,51 @@
+/*--------------- 1ra Area: Codigo de Usuario -----------------------*/
+//-------> importaciones, paquetes
+package Analizadores;
+import java_cup.runtime.Symbol;
+import java.util.LinkedList;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import Analizadores.Tokens;
+
+//------> Codigo para el parser,variables, metodos
+parser code
+{:
+    public String resultado="";
+
+     //Metodo al que se llama automaticamente ante algun error sintactico
+
+    public void syntax_error(Symbol s)
+    {        
+   
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        
+    }
+    
+
+:}
+
+//------> Codigo para las acciones gramaticales
+action code
+{:
+:}
+
+/*--------------- 2da Area: Declaraciones -----------------------*/
+//------> declaracion de terminales 
+terminal mas,menos,por,div,pareni,parend,puntocoma,num;
+
+
+
+//------> declaracion de no terminales
+non terminal String E,prueba;
+
+ 
+
+start with prueba;
+prueba::=E E|prueba E;
+E::=mas | menos | por | div | pareni | parend| puntocoma | num | error ;
+
+

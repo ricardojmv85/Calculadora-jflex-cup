@@ -1,0 +1,8 @@
+ digraph example {
+Inicial -> SUMA
+SUMA -> E
+E -> RESTA
+RESTA -> 2
+RESTA -> 3
+SUMA -> 14
+}

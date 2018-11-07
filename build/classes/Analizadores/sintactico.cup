@@ -1,0 +1,86 @@
+
+package Analizadores;
+import java_cup.runtime.Symbol;
+import java.util.LinkedList; 
+import java.util.ArrayList;
+import java.util.List;
+
+parser code
+{:
+public String resultado="";
+   public Object[][] arbol = new Object[20][];
+    public ArrayList<String> Gramaticas = new ArrayList<String>();
+    public void enlistar(String argumento){
+        Gramaticas.add(argumento);
+    }
+public void agregar(Object objeto,Integer indice){
+    arbol[indice]=new Object[]{objeto};
+    }
+    public List objetar(String texto,Object hijos){
+        List lista = new ArrayList();
+        lista.add(texto);
+        lista.add(hijos.toString());
+        return lista;
+    }
+
+    //Metodo al que se llama automaticamente ante algun error sintactico
+    public void syntax_error(Symbol s)
+    {        
+        enlistar("Error Sintactico");
+
+       
+       
+        
+    }
+
+    //Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {        
+        enlistar("Error Sintactico");
+
+        
+     
+    }
+:}
+
+action code
+{:
+
+:}
+
+terminal mas, menos, por,div,parend,pareni, puntocoma;
+terminal String num;
+
+
+non terminal String INICIO,E;
+
+precedence left mas,menos;
+precedence left por,div;
+
+start with INICIO;
+
+INICIO::=E:a puntocoma {: resultado=a; enlistar("Se compilo completamente");:};
+E::= E:a mas E:b {: float val1= Float.parseFloat(a);
+                    float val2= Float.parseFloat(b);
+                    float r = val1+val2;
+                    RESULT = String.valueOf(r); 
+                    enlistar("SUMA");:}
+    |E:a menos E:b {: float val1= Float.parseFloat(a);
+                    float val2= Float.parseFloat(b);
+                    float r = val1-val2;
+                    RESULT = String.valueOf(r);
+                    enlistar("RESTA"); :}
+    |E:a div E:b {: float val1= Float.parseFloat(a);
+                    float val2= Float.parseFloat(b);
+                    float r = val1/val2;
+                    RESULT = String.valueOf(r); 
+                    enlistar("DIV"); :}
+    |E:a por E:b {: float val1= Float.parseFloat(a);
+                    float val2= Float.parseFloat(b);
+                    float r = val1*val2;
+                    RESULT = String.valueOf(r); 
+                    enlistar("MULTI");:}
+    |pareni E:a parend {: RESULT = a; enlistar("E");:}
+    |num:a {:  enlistar(a); RESULT= objetar("numero "+a.toString(),"").toString(); :};
+
+
